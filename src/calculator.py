@@ -39,6 +39,19 @@ def power(base, exponent):
         raise ValueError("Exponent must be non-negative")
     return base ** exponent
 
-# TODO: Add square root function
-# def sqrt(n):
-#     pass
+def sqrt(n):
+    """Calculate the square root of a number.
+    
+    Args:
+        n: The number to calculate square root for
+    
+    Returns:
+        The square root of n
+    
+    Raises:
+        ValueError: If n is negative
+    """
+    if n < 0:
+        raise ValueError("Cannot calculate square root of negative number")
+    import math
+    return math.sqrt(n)
