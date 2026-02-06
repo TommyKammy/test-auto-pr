@@ -1,0 +1,26 @@
+name: Issue Watcher
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  notify-openclaw:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification to OpenClaw
+        env:
+          OPENCLAW_WEBHOOK: ${{ secrets.OPENCLAW_WEBHOOK_URL }}
+        run: |
+          curl -X POST "${{ secrets.OPENCLAW_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "event": "issue_opened",
+              "repository": "${{ github.repository }}",
+              "issue": {
+                "number": ${{ github.event.issue.number }},
+                "title": "${{ github.event.issue.title }}",
+                "body": ${{ toJson(github.event.issue.body) }},
+                "url": "${{ github.event.issue.html_url }}"
+              }
+            }'
