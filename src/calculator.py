@@ -22,9 +22,22 @@ def divide(a, b):
     # TODO: Add error handling for division by zero
     return a / b
 
-# TODO: Add power function
-# def power(base, exponent):
-#     pass
+def power(base, exponent):
+    """Calculate base raised to the power of exponent.
+    
+    Args:
+        base: The base number
+        exponent: The exponent (must be non-negative)
+    
+    Returns:
+        base ** exponent
+    
+    Raises:
+        ValueError: If exponent is negative
+    """
+    if exponent < 0:
+        raise ValueError("Exponent must be non-negative")
+    return base ** exponent
 
 # TODO: Add square root function
 # def sqrt(n):
