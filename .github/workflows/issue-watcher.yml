@@ -10,9 +10,15 @@ jobs:
     steps:
       - name: Send notification to OpenClaw
         env:
-          OPENCLAW_WEBHOOK: ${{ secrets.OPENCLAW_WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ secrets.OPENCLAW_WEBHOOK_URL }}
         run: |
-          curl -X POST "${{ secrets.OPENCLAW_WEBHOOK_URL }}" \
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "OPENCLAW_WEBHOOK_URL secret not configured. Skipping notification."
+            echo "Note: OpenClaw cron job will still detect this issue via polling."
+            exit 0
+          fi
+          
+          curl -X POST "$WEBHOOK_URL" \
             -H "Content-Type: application/json" \
             -d '{
               "event": "issue_opened",
